@@ -1,11 +1,11 @@
 <template>
     <div class="ui-modal__outer">
-        <div class="ui-modal">
+        <div class="ui-modal" v-click-outside="close">
             <div class="ui-modal__heading">
                 <div class="ui-modal__title">
                     <slot name="title" />
                 </div>
-                <div class="ui-modal__close" @click="$emit('close')">x</div>
+                <div class="ui-modal__close" @click="close">x</div>
             </div>
             <div class="ui-modal__body">
                 <slot />
@@ -17,7 +17,12 @@
     </div>
 </template>
 <script>
+/* eslint-disable import/first */
 import UiButton from './UiButton';
+import vClickOutside from 'v-click-outside';
+import Vue from 'vue';
+
+Vue.use(vClickOutside);
 
 export default {
   components: { UiButton },
@@ -29,7 +34,15 @@ export default {
     };
   },
 
+  directives: {
+    clickOutside: vClickOutside.directive,
+  },
 
+  methods: {
+    close() {
+      this.$emit('close');
+    },
+  },
 };
 </script>
 <style>

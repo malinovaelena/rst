@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import './components/UI/index.js';
 import Main from './components/Main';
 
 export default {

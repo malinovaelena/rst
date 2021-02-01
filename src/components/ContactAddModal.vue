@@ -1,3 +1,4 @@
+
 <template>
     <ui-modal class="contact-add-modal" @close="$emit('close')">
         <template slot="title">
@@ -20,11 +21,13 @@
     </ui-modal>
 </template>
 <script>
+
 import UiButton from './UI/UiButton';
 import UiField from './UI/UiField';
 import UiInput from './UI/UiInput';
 import UiModal from './UI/UiModal';
 import UiSelect from './UI/UiSelect';
+
 
 export default {
   components: {

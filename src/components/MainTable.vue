@@ -96,7 +96,7 @@ export default {
         }
         return 0;
       });
-      this.parsedData = sorted; 
+      this.parsedData = sorted;
     },
   },
 };
