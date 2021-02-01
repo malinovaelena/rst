@@ -3,10 +3,10 @@
         <div class="table__heading">
           <div class="table-row">
             <div>
-                <div class="table-cell__name" @click="sortByName">
+                <div class="table-cell__name" @click="addSorting('Name')">
                     Имя
                 </div>
-                <div class="table-cell__phone" @click="sortByValue">
+                <div class="table-cell__phone" @click="addSorting('Phone')">
                     Телефон
                 </div>
             </div>
@@ -59,44 +59,40 @@ export default {
 
   data() {
     return {
-      parsedData: () => [],
-      sortAscending: 1,
+      parsedData: [],
+      sortAscending: false,
+      sortItem: null,
     };
   },
 
-  created() {
-    this.parsedData = createTree(this.items);
+  watch: {
+    items: {
+      immediate: true,
+      handler(values) {
+        this.parsedData = createTree(values);
+      },
+    },
   },
 
   methods: {
-    toggleSort() {
-      this.sortAscending = this.sortAscending === 1 ? -1 : 1;
+    addSorting(value) {
+      this.sortItem = value;
+      this.sortAscending = !this.sortAscending;
+
+      this.parsedData = this.sort();
     },
 
-    sortByName() {
-      const sorted = this.parsedData.sort((a, b) => {
-        if (a.Name > b.Name) {
-          return this.sortAscending;
-        }
-        if (a.Name < b.Name) {
-          return this.sortAscending - 2;
-        }
-        return 0;
-      });
-      this.parsedData = sorted;
-    },
+    sort() {
+      const { sortItem, parsedData, sortAscending } = this;
+      const sorted = parsedData;
 
-    sortByValue() {
-      const sorted = this.parsedData.sort((a, b) => {
-        if (a.Phone > b.Phone) {
-          return this.sortAscending;
-        }
-        if (a.Phone < b.Phone) {
-          return this.sortAscending - 2;
-        }
-        return 0;
-      });
-      this.parsedData = sorted;
+      if (sortItem === 'Name') {
+        sorted.sort((a, b) => a.Name.localeCompare(b.Name));
+      } else {
+        sorted.sort((a, b) => a.Phone - b.Phone);
+      }
+      if (!sortAscending) return sorted.reverse();
+      return sorted;
     },
   },
 };

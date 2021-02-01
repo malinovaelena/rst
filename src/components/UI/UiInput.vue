@@ -3,7 +3,7 @@
       <input v-if="!numeric"
       :placeholder="placeholder"
       v-model="value"/>
-      <masked-input v-else v-model="value" mask="+7 911 111 11 11" :placeholder="placeholder" />
+      <masked-input v-else v-model="value" mask="\+\7 911 111 11 11" :placeholder="placeholder" />
     </div>
 </template>
 <script>
