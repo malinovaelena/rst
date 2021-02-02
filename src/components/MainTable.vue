@@ -1,3 +1,4 @@
+
 <template>
     <div class="table">
         <div class="table__heading">
@@ -18,25 +19,42 @@
     </div>
 </template>
 <script>
+/* eslint-disable eqeqeq */
 import TableRow from './TableRow';
 
+const findDirector = (item, items, arr) => {
+  const director = items.find(i => i.ID == item.Director);
+
+  arr.push({
+    ...item,
+    Director: director,
+  });
+  if (director.Director) {
+    return findDirector(director, items);
+  }
+  return director;
+};
+
 const createTree = (arr) => {
-  const test = [];
+  const items = [];
   arr.forEach((el) => {
     if (el.Director) {
       // eslint-disable-next-line eqeqeq
       const director = arr.find(i => i.ID == el.Director);
-      test.push({
+      items.push({
         ...el,
         Director: director,
       });
+      // const director = findDirector(el, arr);
     } else {
-      test.push(el);
+      items.push(el);
     }
   });
 
-  return test;
+  return items;
 };
+
+const parsePhone = item => parseInt(item.replaceAll(' ', ''), 0);
 
 export default {
   name: 'main-table',
@@ -89,7 +107,7 @@ export default {
       if (sortItem === 'Name') {
         sorted.sort((a, b) => a.Name.localeCompare(b.Name));
       } else {
-        sorted.sort((a, b) => a.Phone - b.Phone);
+        sorted.sort((a, b) => parsePhone(a.Phone) - parsePhone(b.Phone));
       }
       if (!sortAscending) return sorted.reverse();
       return sorted;

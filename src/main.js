@@ -4,10 +4,12 @@
 import Vue from 'vue';
 import App from './App';
 import vClickOutside from 'v-click-outside';
+import './components/UI/index';
 
 Vue.use(vClickOutside);
 
 Vue.config.productionTip = false;
+
 
 /* eslint-disable no-new */
 new Vue({

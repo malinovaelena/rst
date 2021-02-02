@@ -38,6 +38,7 @@ export default {
 }
 
 .table-row > .table-row {
+    flex-wrap: wrap;
     padding-left: 20px;
 }
 
@@ -51,10 +52,10 @@ export default {
 }
 
 .table-cell__name {
-    width: 40%;
+    width:calc(100% - 267px);
 }
 
 .table-cell__phone {
-    width: 60%;
+    width: 267px;
 }
 </style>

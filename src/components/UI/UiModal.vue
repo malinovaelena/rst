@@ -18,14 +18,14 @@
 </template>
 <script>
 /* eslint-disable import/first */
-import UiButton from './UiButton';
-import vClickOutside from 'v-click-outside';
-import Vue from 'vue';
+// import UiButton from './UiButton';
+// import vClickOutside from 'v-click-outside';
+// import Vue from 'vue';
 
-Vue.use(vClickOutside);
+// Vue.use(vClickOutside);
 
 export default {
-  components: { UiButton },
+  // components: { UiButton },
   name: 'ui-modal',
 
   data() {
@@ -35,7 +35,7 @@ export default {
   },
 
   directives: {
-    clickOutside: vClickOutside.directive,
+    // clickOutside: vClickOutside.directive,
   },
 
   methods: {

@@ -6,13 +6,13 @@
         </template>
         <div class="contact-add-modal__content">
             <ui-field title="Имя">
-                <ui-input @update="updateName" />
+                <ui-input @update="addName" />
             </ui-field>
             <ui-field title="Телефон">
-                <ui-input @update="updatePhone" numeric />
+                <ui-input @update="addPhone" numeric />
             </ui-field>
             <ui-field title="Начальник" v-if="contacts.length">
-                <ui-select @update="updateDirector" :items="contacts" />
+                <ui-select @update="addDirector" :items="contacts" />
             </ui-field>
         </div>
         <template slot="footer">
@@ -21,23 +21,7 @@
     </ui-modal>
 </template>
 <script>
-
-import UiButton from './UI/UiButton';
-import UiField from './UI/UiField';
-import UiInput from './UI/UiInput';
-import UiModal from './UI/UiModal';
-import UiSelect from './UI/UiSelect';
-
-
 export default {
-  components: {
-    UiModal,
-    UiButton,
-    UiField,
-    UiInput,
-    UiSelect,
-  },
-
   name: 'contact-add-modal',
 
   props: {
@@ -63,15 +47,15 @@ export default {
       this.$emit('save', this.contact);
     },
 
-    updatePhone(value) {
+    addPhone(value) {
       this.contact.Phone = value;
     },
 
-    updateName(value) {
+    addName(value) {
       this.contact.Name = value;
     },
 
-    updateDirector(value) {
+    addDirector(value) {
       this.contact.Director = value;
     },
   },

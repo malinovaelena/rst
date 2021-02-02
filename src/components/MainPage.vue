@@ -8,7 +8,6 @@
 <script>
 import ContactAddModal from './ContactAddModal';
 import MainTable from './MainTable';
-import UiButton from './UI/UiButton';
 
 const DATA = [
   {
@@ -20,25 +19,25 @@ const DATA = [
   {
     ID: 2,
     Name: 'Петр',
-    Phone: '+ 7 923 232 44 42',
+    Phone: '+ 7 923 232 44 49',
     Director: null,
   },
   {
     ID: 3,
     Name: 'Але',
-    Phone: '+ 7 923 232 44 43',
+    Phone: '+ 7 923 232 44 44',
     Director: null,
   },
   {
     ID: 4,
     Name: 'Иван',
-    Phone: '+ 7 923 232 44 45',
+    Phone: '+ 7 923 232 44 46',
     Director: null,
   },
   {
     ID: 5,
     Name: 'Борис',
-    Phone: '+ 7 923 232 44 47',
+    Phone: '+ 7 923 232 44 40',
     Director: null,
   },
 ];
@@ -53,7 +52,6 @@ export default {
 
   components: {
     MainTable,
-    UiButton,
     ContactAddModal,
   },
 
@@ -71,6 +69,10 @@ export default {
     }
   },
 
+  updated() {
+    this.saveInStorage();
+  },
+
   data() {
     return {
       IsModalOpen: false,
@@ -84,14 +86,19 @@ export default {
       this.IsModalOpen = true;
     },
 
+    saveInStorage() {
+      const parsed = JSON.stringify(this.tableData);
+      localStorage.setItem('table-data', parsed);
+    },
+
     save(item) {
       const empl = {
         ...item,
         ID: this.tableData.length + 1,
       };
       this.tableData.push(empl);
-      const parsed = JSON.stringify(this.tableData);
-      localStorage.setItem('table-data', parsed);
+      // const parsed = JSON.stringify(this.tableData);
+      // localStorage.setItem('table-data', parsed);
       this.IsModalOpen = false;
     },
 
