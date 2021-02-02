@@ -42,8 +42,20 @@ export default {
     };
   },
 
+  computed: {
+    isValidate() {
+      const { Name, Phone } = this.contact;
+      return Name && Phone;
+    },
+  },
+
   methods: {
     save() {
+      if (!this.isValidate) {
+        alert('Заполните поля - имя и телефон');
+        return;
+      }
+
       this.$emit('save', this.contact);
     },
 
@@ -65,8 +77,13 @@ export default {
 .contact-add-modal__content .ui-field {
   padding: 10px 0;
 }
+
 .contact-add-modal__content .ui-field__title {
   width: 40%;
+}
+
+.contact-add-modal__content .ui-field__input {
+  width: 60%;
 }
 </style>
 

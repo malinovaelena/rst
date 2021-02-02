@@ -27,12 +27,18 @@ export default {
   },
 
   watch: {
-    selected(val) {
-      this.$emit('update', val);
+    selected(value) {
+      this.$emit('update', value);
     },
   },
 };
 </script>
 <style>
+.ui-select {
+  display: flex;
+}
 
+.ui-select select {
+  flex-grow: 1;
+}
 </style>

@@ -17,10 +17,12 @@ export default {
 </script>
 <style>
 .ui-button {
-  border-radius: 30px;
-  padding: 5px 10px;
+  border-radius: 13px;
+  padding: 5px 16px;
   border: 1px solid black;
   background: lightgray;
   cursor: pointer;
+  display: inline-flex;
+  width: min-content;
 }
 </style>

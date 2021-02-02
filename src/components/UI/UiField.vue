@@ -1,7 +1,7 @@
 <template>
     <div class="ui-field">
         <div class="ui-field__title">{{ title }}</div>
-        <slot />
+        <div class="ui-field__input"><slot /></div>
     </div>
 </template>
 <script>
@@ -18,7 +18,7 @@ export default {
 </script>
 <style>
 .ui-field {
-    display: flex;
-    text-transform: capitalize;
+  display: flex;
+  text-transform: capitalize;
 }
 </style>

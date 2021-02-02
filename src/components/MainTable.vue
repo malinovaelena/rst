@@ -22,30 +22,15 @@
 /* eslint-disable eqeqeq */
 import TableRow from './TableRow';
 
-const findDirector = (item, items, arr) => {
-  const director = items.find(i => i.ID == item.Director);
-
-  arr.push({
-    ...item,
-    Director: director,
-  });
-  if (director.Director) {
-    return findDirector(director, items);
-  }
-  return director;
-};
-
 const createTree = (arr) => {
   const items = [];
   arr.forEach((el) => {
     if (el.Director) {
-      // eslint-disable-next-line eqeqeq
       const director = arr.find(i => i.ID == el.Director);
       items.push({
         ...el,
         Director: director,
       });
-      // const director = findDirector(el, arr);
     } else {
       items.push(el);
     }

@@ -1,6 +1,7 @@
 <template>
     <div class="main-page">
-        <ui-button @click="open">Добавить</ui-button>
+        <ui-button @click="open"
+        class="main-page__open-modal">Добавить</ui-button>
         <main-table :items="tableData" :tableHeading="tableHeading" />
         <contact-add-modal v-if="IsModalOpen" @save="save" @close="close" :contacts="tableData" />
     </div>
@@ -97,8 +98,6 @@ export default {
         ID: this.tableData.length + 1,
       };
       this.tableData.push(empl);
-      // const parsed = JSON.stringify(this.tableData);
-      // localStorage.setItem('table-data', parsed);
       this.IsModalOpen = false;
     },
 
@@ -109,5 +108,14 @@ export default {
 };
 </script>
 <style>
+.main-page {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: min-content;
+}
 
+.main-page__open-modal {
+  margin-bottom: 50px;
+}
 </style>

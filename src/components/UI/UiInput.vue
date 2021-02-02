@@ -54,6 +54,10 @@ export default {
 </script>
 <style>
 .ui-input {
-    display: block;
+  display: flex;
+}
+
+.ui-input input {
+  flex-grow: 1;
 }
 </style>
