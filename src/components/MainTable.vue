@@ -1,6 +1,5 @@
-
 <template>
-    <div class="table">
+  <div class="table">
         <div class="table__heading">
           <div class="table-row">
             <div>
@@ -14,27 +13,58 @@
           </div>
         </div>
         <div class="table__body">
-            <table-row v-for="contact in parsedData" :key="contact.ID" :item="contact"/>
+            <table-row v-for="contact in parsedData"
+              :key="contact.ID"
+              :item="contact"/>
         </div>
     </div>
 </template>
 <script>
 /* eslint-disable eqeqeq */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+/* eslint-disable no-restricted-syntax */
 import TableRow from './TableRow';
 
-const createTree = (arr) => {
+const find = (arr, id, items) => {
+  const director = arr.find(item => item.ID == id);
+  if (director) {
+    director.Subordinates = [...items];
+    return arr;
+  }
+  // eslint-disable-next-line prefer-const
+  for (let i of arr) {
+    if (i.Subordinates) return find(i.Subordinates, id, items);
+  }
+};
+
+const createddTree = (arr) => {
   const items = [];
-  arr.forEach((el) => {
-    if (el.Director) {
-      const director = arr.find(i => i.ID == el.Director);
-      items.push({
-        ...el,
-        Director: director,
-      });
+  const directors = arr.filter(item => item.Director == null);
+  const allSubordinates = arr.filter(item => item.Director);
+
+  items.push(...directors);
+
+  const groupsSubordinates = {};
+  // eslint-disable-next-line prefer-const
+  for (let item of allSubordinates) {
+    if (groupsSubordinates[item.Director] == undefined) {
+      groupsSubordinates[item.Director] = [item];
     } else {
-      items.push(el);
+      groupsSubordinates[item.Director].push(item);
+    }
+  }
+
+  items.forEach((i) => {
+    if (groupsSubordinates[i.ID]) {
+      // eslint-disable-next-line no-param-reassign
+      i.Subordinates = [...groupsSubordinates[i.ID]];
+      groupsSubordinates[i.ID] = undefined;
     }
   });
+  for (let r in groupsSubordinates) {
+    if (groupsSubordinates[r]) return find(items, r, groupsSubordinates[r]);
+  }
 
   return items;
 };
@@ -72,7 +102,8 @@ export default {
     items: {
       immediate: true,
       handler(values) {
-        this.parsedData = createTree(values);
+        this.parsedData = this.items;
+       // this.parsedData = createddTree(values);
       },
     },
   },

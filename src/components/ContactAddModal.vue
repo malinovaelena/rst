@@ -52,6 +52,7 @@ export default {
   methods: {
     save() {
       if (!this.isValidate) {
+        // eslint-disable-next-line no-alert
         alert('Заполните поля - имя и телефон');
         return;
       }

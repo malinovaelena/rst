@@ -2,7 +2,7 @@
     <div class="table-row">
         <div>
             <div class="table-cell__name">
-                <div v-if="item.Director"
+                <div v-if="item.Subordinates"
                 class="table-cell__has-director">+</div>
                 {{ item.Name }}
             </div>
@@ -10,7 +10,11 @@
                 {{ item.Phone }}
             </div>
         </div>
-        <table-row v-if="item.Director" :item="item.Director" />
+        <template v-if="item.Subordinates">
+          <table-row v-for="subordinate in item.Subordinates"
+            :item="subordinate"
+            :key="subordinate.ID" />
+        </template>
     </div>
 </template>
 <script>
