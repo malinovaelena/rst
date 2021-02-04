@@ -18,10 +18,10 @@ const findDirector = (arr, item) => {
     }
     return arr[indDirector].Subordinates = [item];
   }
-  for (let i of arr) {
+  for (const i of arr) {
     if (i.Subordinates) return findDirector(i.Subordinates, item);
   }
-}
+};
 
 const DATA = [
   {
@@ -79,7 +79,14 @@ export default {
     const parsedData = JSON.parse(data);
 
     if (Array.isArray(parsedData)) {
-      this.tableData = parsedData;
+      const isUpdatedStorage = localStorage.getItem('updated');
+      if (!isUpdatedStorage) {
+        const updatedData = this.updatedStorage(parsedData);
+        localStorage.setItem('updated', true);
+        this.tableData = updatedData;
+      } else {
+        this.tableData = parsedData;
+      }
     } else {
       localStorage.removeItem('table-data');
       this.tableData = DATA;
@@ -111,6 +118,25 @@ export default {
   },
 
   methods: {
+    updatedStorage(employees) {
+      employees.forEach((employee) => {
+        employee.Subordinates = [];
+      });
+
+      const data = employees;
+
+      const directors = data.filter(director => director.Director == null);
+      const subordinates = data.filter(director => director.Director);
+
+      directors.forEach((director) => {
+        const currentSubordinates = subordinates.filter(item => item.Director == director.ID);
+
+        director.Subordinates = currentSubordinates;
+      });
+
+      return directors;
+    },
+
     open() {
       this.IsModalOpen = true;
     },
