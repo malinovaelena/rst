@@ -10,90 +10,60 @@
 import ContactAddModal from './ContactAddModal';
 import MainTable from './MainTable';
 
+const findDirector = (arr, item) => {
+  const indDirector = arr.findIndex(i => i.ID == item.Director);
+  if (indDirector > -1) {
+    if (arr[indDirector].Subordinates) {
+      arr[indDirector].Subordinates.push(item);
+    }
+    return arr[indDirector].Subordinates = [item];
+  }
+  for (let i of arr) {
+    if (i.Subordinates) return findDirector(i.Subordinates, item);
+  }
+}
+
 const DATA = [
   {
     ID: 1,
     Name: 'Марина',
     Phone: '+ 7 923 232 44 41',
     Director: null,
-    // Subordinates: [],
+    Subordinates: [],
   },
   {
     ID: 2,
     Name: 'Петр',
     Phone: '+ 7 923 232 44 49',
     Director: null,
-    // Subordinates: [],
+    Subordinates: [],
   },
   {
     ID: 3,
     Name: 'Алексей',
     Phone: '+ 7 923 232 44 44',
     Director: null,
-    // Subordinates: [],
+    Subordinates: [],
   },
   {
     ID: 4,
     Name: 'Иван',
     Phone: '+ 7 923 232 44 46',
     Director: null,
-    // Subordinates: [],
+    Subordinates: [],
   },
   {
     ID: 5,
     Name: 'Борис',
     Phone: '+ 7 923 232 44 40',
     Director: null,
-    // Subordinates: [],
+    Subordinates: [],
   },
 ];
 
 const TABLE_HEAD = {
   Name: 'Имя',
   Phone: 'Телефон',
-};
-
-const find = (arr, id, items) => {
-  const director = arr.find(item => item.ID == id);
-  if (director) {
-    director.Subordinates = [...items];
-    return arr;
-  }
-  // eslint-disable-next-line prefer-const
-  for (let i of arr) {
-    if (i.Subordinates) return find(i.Subordinates, id, items);
-  }
-};
-
-const createddTree = (arr) => {
-  const items = [];
-  const directors = arr.filter(item => item.Director == null);
-  const allSubordinates = arr.filter(item => item.Director);
-
-  items.push(...directors);
-
-  const groupsSubordinates = {};
-  // eslint-disable-next-line prefer-const
-  for (let item of allSubordinates) {
-    if (groupsSubordinates[item.Director] == undefined) {
-      groupsSubordinates[item.Director] = [item];
-    } else {
-      groupsSubordinates[item.Director].push(item);
-    }
-  }
-
-  items.forEach((i) => {
-    if (groupsSubordinates[i.ID]) {
-      // eslint-disable-next-line no-param-reassign
-      i.Subordinates = [...groupsSubordinates[i.ID]];
-      groupsSubordinates[i.ID] = undefined;
-    }
-  });
-  for (let r in groupsSubordinates) {
-    if (groupsSubordinates[r]) return find(items, r, groupsSubordinates[r]);
-  }
-
-  return items;
 };
 
 export default {
@@ -126,7 +96,7 @@ export default {
     return {
       IsModalOpen: false,
       tableHeading: TABLE_HEAD,
-      tableData: () => [],
+      tableData: [],
       parsed: [],
     };
   },
@@ -134,11 +104,11 @@ export default {
   watch: {
     tableData: {
       immediate: true,
-      handler(value) {
-        this.parsed = createddTree(value);
-      }
-    }
-  }, 
+      handler() {
+        this.parsed = this.tableData;
+      },
+    },
+  },
 
   methods: {
     open() {
@@ -155,7 +125,8 @@ export default {
         ...item,
         ID: this.tableData.length + 1,
       };
-      this.tableData.push(empl);
+
+      findDirector(this.tableData, empl);
       this.IsModalOpen = false;
     },
 

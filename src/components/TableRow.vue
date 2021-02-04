@@ -2,7 +2,7 @@
     <div class="table-row">
         <div>
             <div class="table-cell__name">
-                <div v-if="item.Subordinates"
+                <div v-if="item.Subordinates.length > 0"
                 class="table-cell__has-director">+</div>
                 {{ item.Name }}
             </div>

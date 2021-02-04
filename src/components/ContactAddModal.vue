@@ -12,7 +12,7 @@
                 <ui-input @update="addPhone" numeric />
             </ui-field>
             <ui-field title="Начальник" v-if="contacts.length">
-                <ui-select @update="addDirector" :items="contacts" />
+                <ui-select @update="addDirector" :items="items" />
             </ui-field>
         </div>
         <template slot="footer">
@@ -21,6 +21,20 @@
     </ui-modal>
 </template>
 <script>
+function flatten(array) {
+  var flattend = [];
+  (function flat(array) {
+    array.forEach(function(el) {
+      if (el.Subordinates.length > 0) {
+        flattend.push(el); 
+        flat(el.Subordinates);
+      } 
+      else flattend.push(el);
+    });
+  })(array);
+  return flattend;
+}
+
 export default {
   name: 'contact-add-modal',
 
@@ -37,9 +51,14 @@ export default {
         Name: '',
         Phone: '',
         Director: '',
+        Subordinates: [],
       },
       items: [],
     };
+  },
+
+  created() {
+    this.items = flatten(this.contacts);
   },
 
   computed: {
