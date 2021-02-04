@@ -22,7 +22,7 @@
 </template>
 <script>
 function flatten(array) {
-  var flattend = [];
+  const flattend = [];
   (function flat(array) {
     array.forEach(function(el) {
       if (el.Subordinates.length > 0) {
