@@ -1,4 +1,3 @@
-
 <template>
     <ui-modal class="contact-add-modal" @close="$emit('close')">
         <template slot="title">
